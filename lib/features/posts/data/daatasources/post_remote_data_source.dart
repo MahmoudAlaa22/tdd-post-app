@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
-import 'package:tdd_post_test/core/error/exception.dart';
-import 'package:tdd_post_test/features/posts/data/models/post_model.dart';
+import '../../../../core/error/exception.dart';
+import '../models/post_model.dart';
 import 'package:http/http.dart' as http;
 
 abstract class PostRemoteDataSource {

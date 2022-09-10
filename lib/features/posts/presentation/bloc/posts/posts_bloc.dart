@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:tdd_post_test/core/error/failures.dart';
-import 'package:tdd_post_test/core/strings/failures.dart';
-import 'package:tdd_post_test/features/posts/domain/entities/post.dart';
-import 'package:tdd_post_test/features/posts/domain/usecases/get_all_posts.dart';
+import '../../../../../core/error/failures.dart';
+import '../../../../../core/strings/failures.dart';
+import '../../../domain/entities/post.dart';
+import '../../../domain/usecases/get_all_posts.dart';
 
 part 'posts_event.dart';
 part 'posts_state.dart';
@@ -15,14 +17,15 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     required this.getAllPosts,
   }) : super(PostsInitial()) {
     on<PostsEvent>((event, emit) async {
+      log('event is $event');
       if (event is GetAllPostsEvent) {
         emit(LoadingPostsState());
         final failureOrPosts = await getAllPosts();
-        _mapFailuerToState(failureOrPosts);
+        emit(_mapFailuerToState(failureOrPosts));
       } else if (event is RefreshPostsEvent) {
         emit(LoadingPostsState());
         final failureOrPosts = await getAllPosts();
-        _mapFailuerToState(failureOrPosts);
+        emit(_mapFailuerToState(failureOrPosts));
       }
     });
   }

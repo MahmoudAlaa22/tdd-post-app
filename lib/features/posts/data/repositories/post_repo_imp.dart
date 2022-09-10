@@ -1,11 +1,13 @@
-import 'package:tdd_post_test/core/error/exception.dart';
-import 'package:tdd_post_test/features/posts/data/daatasources/post_local_data_source.dart';
-import 'package:tdd_post_test/features/posts/data/daatasources/post_remote_data_source.dart';
-import 'package:tdd_post_test/features/posts/data/models/post_model.dart';
-import 'package:tdd_post_test/features/posts/domain/entities/post.dart';
-import 'package:tdd_post_test/core/error/failures.dart';
+import 'dart:developer';
+
+import '../../../../core/error/exception.dart';
+import '../daatasources/post_local_data_source.dart';
+import '../daatasources/post_remote_data_source.dart';
+import '../models/post_model.dart';
+import '../../domain/entities/post.dart';
+import '../../../../core/error/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:tdd_post_test/features/posts/domain/repositories/post_repo.dart';
+import '../../domain/repositories/post_repo.dart';
 
 import '../../../../core/network/network_info.dart';
 
@@ -27,6 +29,7 @@ class PostRepoImp implements PostRepo {
     if (await networkInfo.isConnected) {
       try {
         final remotPosts = await postRemoteDataSource.getAllPosts();
+        log('remotPosts is ${remotPosts.first.title}');
         await postLocalDataSource.cacheDPosts(remotPosts);
         return Right(remotPosts);
       } on ServerException {
@@ -45,7 +48,7 @@ class PostRepoImp implements PostRepo {
   @override
   Future<Either<Failure, Unit>> addPost(Post post) async {
     final PostModel postModel =
-        PostModel(id: post.id, title: post.title, body: post.body);
+        PostModel(title: post.title, body: post.body);
     return _getMessage(() => postRemoteDataSource.addPost(postModel));
   }
 

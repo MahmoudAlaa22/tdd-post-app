@@ -8,18 +8,18 @@ abstract class AddDeleteUpdatePostState extends Equatable {
 }
 
 class AddDeleteUpdatePostInitial extends AddDeleteUpdatePostState {}
-class LoadingAddDeleteUpdatePostInitial extends AddDeleteUpdatePostState {}
-class ErrorAddDeleteUpdatePostInitial extends AddDeleteUpdatePostState {
-  final String error;
-
-const  ErrorAddDeleteUpdatePostInitial({required this.error});
-  @override
-  List<Object> get props => [error];
-}
-class MessgaeAddDeleteUpdatePostInitial extends AddDeleteUpdatePostState {
+class LoadingAddDeleteUpdatePostState extends AddDeleteUpdatePostState {}
+class ErrorAddDeleteUpdatePostState extends AddDeleteUpdatePostState {
   final String message;
 
-  const MessgaeAddDeleteUpdatePostInitial({required this.message});
+const  ErrorAddDeleteUpdatePostState({required this.message});
+  @override
+  List<Object> get props => [message];
+}
+class MessgaeAddDeleteUpdatePostState extends AddDeleteUpdatePostState {
+  final String message;
+
+  const MessgaeAddDeleteUpdatePostState({required this.message});
     @override
   List<Object> get props => [message];
 }
